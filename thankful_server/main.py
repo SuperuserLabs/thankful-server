@@ -3,9 +3,11 @@ from typing import Dict, Optional, List, Any
 from flask import Flask
 from flask_restplus import Api, Resource, fields
 
+from . import __version__
+
 app = Flask(__name__)
-api = Api(app, version='1.0', title='TodoMVC API',
-          description='A simple TodoMVC API')
+api = Api(app, version=__version__, title='Thankful Server API',
+          description='An API for getting information about creators')
 
 ns = api.namespace('creators', description='Creator operations')
 
@@ -45,10 +47,9 @@ class CreatorDAO:
         self.creators[creator.id] = creator
         return creator
 
-    def update(self, cid, data):
-        todo = self.get(cid)
-        todo.update(data)
-        return todo
+    def update(self, cid, creator):
+        self.creators[cid] = creator
+        return creator
 
     def delete(self, cid):
         self.creators.pop(cid)
@@ -102,7 +103,7 @@ class CreatorResource(Resource):
         else:
             api.abort(404, "Creator {} doesn't exist".format(id))
 
-    @ns.doc('delete_todo')
+    @ns.doc('delete_creator')
     @ns.response(204, 'Creator deleted')
     def delete(self, cid):
         '''Delete a creator given its identifier'''
