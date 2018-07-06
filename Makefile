@@ -5,10 +5,18 @@ install:
 	pip3 install .
 
 test:
-	pytest thankful_server/*
+	pipenv run pytest thankful_server/main.py
 
 lint:
-	true
+	pipenv run pylint thankful_server/
+
+typecheck:
+	pipenv run mypy thankful_server --ignore-missing-imports
+
+precommit:
+	make typecheck || true
+	make lint || true
+	make test
 
 build:
 	true

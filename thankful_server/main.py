@@ -1,9 +1,16 @@
+from sys import version_info
 from typing import Dict, Optional, List, Any
 
 from flask import Flask
 from flask_restplus import Api, Resource, fields
 
 from . import __version__
+
+# Backport
+if (3, 5) <= version_info < (3, 7):
+    from dataclasses import dataclass
+elif version_info < (3, 6):
+    raise Exception("Incompatible Python version")
 
 app = Flask(__name__)
 api = Api(app, version=__version__, title='Thankful Server API',
@@ -14,19 +21,24 @@ ns = api.namespace('creators', description='Creator operations')
 creatorModel = api.model('Creator', {
     'id': fields.Integer(readOnly=True, description='The creator unique identifier'),
     'name': fields.String(required=True, description='The creator name'),
-    'youtube_id': fields.String(required=True, description='The creators YouTube ID'),
+    'urls': fields.List(fields.String, required=True, description='URLs to the creators profiles'),
 })
 
 
+@dataclass
 class Creator:
-    def __init__(self, name, cid=None, youtube_id=None, data: Dict[str, Any] = None) -> None:
-        self.id = cid
-        self.name = name
-        self.youtube_id = youtube_id
-        self.data = data if data else dict()
+    id: Optional[int] = None
+    name: Optional[str] = None
+    urls: Optional[List[str]] = None
+    data: Optional[Dict[str, Any]] = None
 
-    def __repr__(self):
-        return f"<Creator name='{self.name}'>"
+    def dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "urls": self.urls,
+            "data": self.data,
+        }
 
 
 class CreatorDAO:
@@ -44,7 +56,8 @@ class CreatorDAO:
 
     def create(self, creator: Creator):
         creator.id = self.counter = self.counter + 1
-        self.creators[creator.id] = creator
+        if creator.id:
+            self.creators[creator.id] = creator
         return creator
 
     def update(self, cid, creator):
@@ -64,7 +77,7 @@ def test_creator_create():
 
     creators = dao.list()
     assert creators
-    print(dir(creators[0]))
+    print(creators[0].dict())
     assert creators[0].name == "Test"
 
 
