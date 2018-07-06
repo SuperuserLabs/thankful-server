@@ -10,6 +10,7 @@ dataclasses = "*"
 [dev-packages]
 pytest = "*"
 mypy = "*"
+"autopep8" = "*"
 
 [requires]
 python_version = "3.6"
