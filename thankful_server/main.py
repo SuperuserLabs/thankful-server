@@ -117,5 +117,9 @@ class CreatorResource(Resource):
         return creatorDAO.update(cid, api.payload)
 
 
-if __name__ == '__main__':
+def main():
     app.run(debug=True)
+
+
+if __name__ == '__main__':
+    main()

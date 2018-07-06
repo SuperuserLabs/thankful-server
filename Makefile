@@ -1,5 +1,5 @@
 run:
-	python3 main.py
+	python3 -m thankful_server
 
 install:
 	pip3 install .
