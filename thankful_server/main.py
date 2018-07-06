@@ -8,6 +8,7 @@ from . import __version__
 app = Flask(__name__)
 api = Api(app, version=__version__, title='Thankful Server API',
           description='An API for getting information about creators')
+# TODO: Do some fancy stuff with blueprints to handle versions
 
 ns = api.namespace('creators', description='Creator operations')
 
