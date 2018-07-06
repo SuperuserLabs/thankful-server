@@ -87,7 +87,7 @@ class CreatorListResource(Resource):
         return creatorDAO.create(c), 201
 
 
-@ns.route('/<int:id>')
+@ns.route('/<int:cid>')
 @ns.response(404, 'Creator not found')
 @ns.param('id', 'The creator identifier')
 class CreatorResource(Resource):
@@ -101,7 +101,7 @@ class CreatorResource(Resource):
         if c is not None:
             return c
         else:
-            api.abort(404, "Creator {} doesn't exist".format(id))
+            api.abort(404, "Creator {} doesn't exist".format(cid))
 
     @ns.doc('delete_creator')
     @ns.response(204, 'Creator deleted')
