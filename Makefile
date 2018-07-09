@@ -1,10 +1,11 @@
 run:
-	pipenv run -m thankful_server
+	pipenv run python -m thankful_server
 
 install:
 	pip3 show pipenv || pip3 install pipenv
 	pipenv install
-	pipenv run pip install pipenv .
+	pipenv run pip install pipenv
+	pipenv run pip --editable .
 
 test:
 	pipenv run pytest thankful_server/main.py
