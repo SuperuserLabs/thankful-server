@@ -12,6 +12,7 @@ pytest = "*"
 mypy = "*"
 "autopep8" = "*"
 pylint = "*"
+pipenv = "*"
 
 [requires]
 python_version = "3.6"

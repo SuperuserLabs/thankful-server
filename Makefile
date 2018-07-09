@@ -3,8 +3,7 @@ run:
 
 install:
 	pip3 show pipenv || pip3 install pipenv
-	pipenv install
-	pipenv run pip install pipenv
+	pipenv install --dev
 	pipenv run pip install --editable .
 
 test:
