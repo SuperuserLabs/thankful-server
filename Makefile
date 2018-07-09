@@ -5,7 +5,7 @@ install:
 	pip3 show pipenv || pip3 install pipenv
 	pipenv install
 	pipenv run pip install pipenv
-	pipenv run pip --editable .
+	pipenv run pip install --editable .
 
 test:
 	pipenv run pytest thankful_server/main.py thankful_server/*/*.py
