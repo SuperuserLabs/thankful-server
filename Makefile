@@ -8,7 +8,7 @@ install:
 	pipenv run pip --editable .
 
 test:
-	pipenv run pytest thankful_server/main.py
+	pipenv run pytest thankful_server/main.py thankful_server/*/*.py
 
 lint:
 	pipenv run pylint thankful_server/
