@@ -117,6 +117,17 @@ class CreatorResource(Resource):
         '''Update a creator given its identifier'''
         return creatorDAO.update(cid, api.payload)
 
+nst = api.namespace('thanks', description='Creator operations')
+
+@nst.route('/<int:cid>/<int:thx>')
+@nst.response(404, 'Creator not found')
+@nst.param('cid', 'The creator identifier')
+class ThanksResource(Resource):
+    '''Show a single creator and lets you delete them'''
+
+    @ns.doc('thank_creator')
+    def post(self, cid, thx):
+        return 'cid: {}, thx: {}'.format(cid, thx)
 
 def main():
     app.run(debug=True)
