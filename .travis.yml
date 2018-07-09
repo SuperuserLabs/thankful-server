@@ -7,6 +7,5 @@ install:
  - make install
 
 script:
- - make lint
- #- make test
+ - make precommit
  - make build
