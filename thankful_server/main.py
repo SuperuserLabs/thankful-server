@@ -1,7 +1,7 @@
 from typing import Dict, Optional, List, Any
 
-from flask import Flask
-from flask_restplus import Api, Resource, fields
+from flask import Flask, request
+from flask_restplus import Api, Resource, fields, reqparse
 
 from . import __version__
 
@@ -119,15 +119,23 @@ class CreatorResource(Resource):
 
 nst = api.namespace('thanks', description='Creator operations')
 
-@nst.route('/<int:cid>/<int:thx>')
+thanksModel = api.model('Thanks', {
+    'creator_id': fields.Integer(required=True, description='The creator unique identifier'),
+    'user_id': fields.String(required=True, description='The user id'),
+    'content_url': fields.String(required=True, description='Content thanked'),
+})
+
+@nst.route('/<int:cid>')
 @nst.response(404, 'Creator not found')
 @nst.param('cid', 'The creator identifier')
 class ThanksResource(Resource):
     '''Show a single creator and lets you delete them'''
 
     @ns.doc('thank_creator')
-    def post(self, cid, thx):
-        return 'cid: {}, thx: {}'.format(cid, thx)
+    @ns.param('content_url', help="URL to thank")
+    def post(self, cid):
+        content_url = request.args["content_url"]
+        return 'cid: {}, url: {}'.format(cid, content_url)
 
 def main():
     app.run(debug=True)
