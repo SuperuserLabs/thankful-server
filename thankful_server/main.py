@@ -4,7 +4,7 @@ from flask import Flask
 from flask_restplus import Api
 
 from . import __version__
-from .rest import creators, thanks
+from .rest import creators, thanks, missing
 
 app = Flask(__name__)
 api = Api(app, version=__version__, title='Thankful Server API',
@@ -13,6 +13,7 @@ api = Api(app, version=__version__, title='Thankful Server API',
 
 api.add_namespace(creators.api)
 api.add_namespace(thanks.api)
+api.add_namespace(missing.api)
 
 
 def main() -> None:
