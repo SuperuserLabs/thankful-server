@@ -23,7 +23,7 @@ missingModel = api.model('Missing', {
 
 @api.route('/')
 class MissingResource(Resource):
-    '''omg how many times do i have to document this shit'''
+    '''beep boop documentation'''
 
     @api.doc('thank_creator')
     @api.param('missing_info', help="The json")

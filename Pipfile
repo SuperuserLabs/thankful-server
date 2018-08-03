@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 flask-restplus = "*"
 dataclasses = "*"
+flask-cors = "*"
 
 [dev-packages]
 pytest = "*"
